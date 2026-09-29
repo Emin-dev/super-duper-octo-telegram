@@ -18,9 +18,40 @@ jobs:
         run: swift test
   ios:
     runs-on: xcode-27
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug, Release]
     steps:
       - uses: actions/checkout@v4
       - name: Show installed SDKs
         run: xcodebuild -showsdks
-      - name: Build iOS simulator app
-        run: xcodebuild -project Rentbutik.xcodeproj -scheme Rentbutik -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
+      - name: Boot iOS 27 iPhone simulator
+        run: python3 scripts/select-simulator.py
+      - name: Test app state and UI in Debug
+        if: matrix.configuration == 'Debug'
+        run: |
+          set -o pipefail
+          xcodebuild -project Rentbutik.xcodeproj -scheme Rentbutik -configuration Debug \
+            -destination "platform=iOS Simulator,id=$TEST_SIMULATOR_ID" \
+            -parallel-testing-enabled NO -resultBundlePath TestResults-Debug.xcresult \
+            CODE_SIGNING_ALLOWED=NO test | tee xcode-Debug.log
+      - name: Test production guards in Release
+        if: matrix.configuration == 'Release'
+        run: |
+          set -o pipefail
+          xcodebuild -project Rentbutik.xcodeproj -scheme Rentbutik -configuration Release \
+            -destination "platform=iOS Simulator,id=$TEST_SIMULATOR_ID" \
+            -parallel-testing-enabled NO -only-testing:RentbutikTests \
+            -resultBundlePath TestResults-Release.xcresult \
+            ENABLE_TESTABILITY=YES CODE_SIGNING_ALLOWED=NO test | tee xcode-Release.log
+      - name: Preserve Xcode results and UI screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Xcode-${{ matrix.configuration }}-results
+          path: |
+            TestResults-*.xcresult
+            xcode-*.log
+          retention-days: 14

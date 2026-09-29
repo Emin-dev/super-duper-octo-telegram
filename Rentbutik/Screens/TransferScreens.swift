@@ -570,6 +570,7 @@ struct TransferBookScreen: View {
                     .contentTransition(.numericText())
                     .frame(maxWidth: .infinity)
             }
+            .accessibilityIdentifier("transfer.confirm")
             .buttonStyle(.rentbutik)
             .buttonBorderShape(.capsule)
             .controlSize(.large)

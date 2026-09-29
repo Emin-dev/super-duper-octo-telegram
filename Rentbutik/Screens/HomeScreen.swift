@@ -145,6 +145,7 @@ private struct HomeModuleGrid: View {
                           supporting: "Rides & tours from Baku") {
                 router.push(.transferList)
             }
+            .accessibilityIdentifier("home.transfer")
             .zoomSource("transfer", in: zoom, cornerRadius: Theme.Radius.tile)
 
             RentbutikTile(symbol: "car.fill",
@@ -152,6 +153,7 @@ private struct HomeModuleGrid: View {
                           supporting: "Rent a car by day, week or month") {
                 router.push(.renterList)
             }
+            .accessibilityIdentifier("home.renter")
             .zoomSource("renter", in: zoom, cornerRadius: Theme.Radius.tile)
 
             RentbutikTile(symbol: "bolt.car.fill",
@@ -165,6 +167,7 @@ private struct HomeModuleGrid: View {
                     router.push(.evUnlock(vehicleID: "veh-ev-6"))
                 }
             }
+            .accessibilityIdentifier("home.electric")
             .zoomSource("electric", in: zoom, cornerRadius: Theme.Radius.tile)
 
             RentbutikTile(symbol: "steeringwheel",
@@ -174,6 +177,7 @@ private struct HomeModuleGrid: View {
                           onEndTrip: endTrip(for: .golfCart)) {
                 router.push(.golfMap)
             }
+            .accessibilityIdentifier("home.golf")
             .zoomSource("golf", in: zoom, cornerRadius: Theme.Radius.tile)
         }
     }

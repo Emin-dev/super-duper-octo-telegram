@@ -96,6 +96,7 @@ struct ProfileScreen: View {
                                 .currency(code: Currency.code).precision(.fractionLength(2)))) {
                     sheet = .wallet
                 }
+                .accessibilityIdentifier("profile.wallet")
                 ProfileTile(symbol: "key.fill", title: String(localized: "Hosting"),
                             value: String(localized: "Earn with your car")) {
                     router.push(.becomeHost)

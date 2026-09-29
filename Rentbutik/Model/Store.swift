@@ -566,7 +566,7 @@ final class Store {
 
     var redeemedPromos: Set<String> = []
 
-    static func live() -> Store {
+    static func live(snapshotURL suppliedURL: URL? = nil) -> Store {
         let store = AppConfiguration.isDemo ? seeded() : Store()
         store.trips = []
         store.ledger = []
@@ -574,9 +574,14 @@ final class Store {
         store.transactions = []
         guard AppConfiguration.isDemo else { return store }
         do {
-            let folder = try FileManager.default.url(for: .applicationSupportDirectory,
-                                                    in: .userDomainMask, appropriateFor: nil, create: true)
-            let url = folder.appendingPathComponent("rentbutik-v2-demo.json")
+            let url: URL
+            if let suppliedURL {
+                url = suppliedURL
+            } else {
+                let folder = try FileManager.default.url(for: .applicationSupportDirectory,
+                                                        in: .userDomainMask, appropriateFor: nil, create: true)
+                url = folder.appendingPathComponent("rentbutik-v2-demo.json")
+            }
             store.snapshotURL = url
             if FileManager.default.fileExists(atPath: url.path) {
                 let snapshot = try JSONDecoder().decode(Snapshot.self, from: Data(contentsOf: url))
@@ -850,4 +855,3 @@ final class Store {
                  photoName: "golfCartVIP", symbol: "steeringwheel"),
     ]
 }
-

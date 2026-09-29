@@ -6,8 +6,20 @@
 	objectVersion = 110;
 	objects = {
 
+/* Begin PBXTargetDependency section */
+		F0010000000000000000000A = {isa = PBXTargetDependency; target = 04118187305C37F600976F26; targetProxy = F0010000000000000000000B; };
+		F0020000000000000000000A = {isa = PBXTargetDependency; target = 04118187305C37F600976F26; targetProxy = F0020000000000000000000B; };
+/* End PBXTargetDependency section */
+
+/* Begin PBXContainerItemProxy section */
+		F0010000000000000000000B = {isa = PBXContainerItemProxy; containerPortal = 04118180305C37F600976F26; proxyType = 1; remoteGlobalIDString = 04118187305C37F600976F26; remoteInfo = Rentbutik; };
+		F0020000000000000000000B = {isa = PBXContainerItemProxy; containerPortal = 04118180305C37F600976F26; proxyType = 1; remoteGlobalIDString = 04118187305C37F600976F26; remoteInfo = Rentbutik; };
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		04118188305C37F600976F26 /* Rentbutik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rentbutik.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F00100000000000000000002 /* RentbutikTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RentbutikTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F00200000000000000000002 /* RentbutikUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RentbutikUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,6 +28,8 @@
 			path = Rentbutik;
 			sourceTree = "<group>";
 		};
+		F00100000000000000000003 /* RentbutikTests */ = {isa = PBXFileSystemSynchronizedRootGroup; path = RentbutikTests; sourceTree = "<group>"; };
+		F00200000000000000000003 /* RentbutikUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; path = RentbutikUITests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -24,6 +38,8 @@
 			files = (
 			);
 		};
+		F00100000000000000000005 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		F00200000000000000000005 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -31,6 +47,8 @@
 			isa = PBXGroup;
 			children = (
 				0411818A305C37F600976F26 /* Rentbutik */,
+                F00200000000000000000003 /* RentbutikUITests */,
+                F00100000000000000000003 /* RentbutikTests */,
 				04118189305C37F600976F26 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -39,6 +57,8 @@
 			isa = PBXGroup;
 			children = (
 				04118188305C37F600976F26 /* Rentbutik.app */,
+                F00200000000000000000002 /* RentbutikUITests.xctest */,
+                F00100000000000000000002 /* RentbutikTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -64,6 +84,30 @@
 			productReference = 04118188305C37F600976F26 /* Rentbutik.app */;
 			productType = "com.apple.product-type.application";
 		};
+		F00100000000000000000001 /* RentbutikTests */ = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = F00100000000000000000007;
+            buildPhases = (F00100000000000000000004, F00100000000000000000005, F00100000000000000000006);
+            buildRules = ();
+            dependencies = (F0010000000000000000000A);
+            fileSystemSynchronizedGroups = (F00100000000000000000003);
+            name = RentbutikTests;
+            productName = RentbutikTests;
+            productReference = F00100000000000000000002;
+            productType = "com.apple.product-type.bundle.unit-test";
+        };
+		F00200000000000000000001 /* RentbutikUITests */ = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = F00200000000000000000007;
+            buildPhases = (F00200000000000000000004, F00200000000000000000005, F00200000000000000000006);
+            buildRules = ();
+            dependencies = (F0020000000000000000000A);
+            fileSystemSynchronizedGroups = (F00200000000000000000003);
+            name = RentbutikUITests;
+            productName = RentbutikUITests;
+            productReference = F00200000000000000000002;
+            productType = "com.apple.product-type.bundle.ui-testing";
+        };
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -74,6 +118,8 @@
 				LastSwiftUpdateCheck = 2700;
 				LastUpgradeCheck = 2700;
 				TargetAttributes = {
+                    F00200000000000000000001 = {CreatedOnToolsVersion = 27.0; TestTargetID = 04118187305C37F600976F26; };
+                    F00100000000000000000001 = {CreatedOnToolsVersion = 27.0; TestTargetID = 04118187305C37F600976F26; };
 					04118187305C37F600976F26 = {
 						CreatedOnToolsVersion = 27.0;
 					};
@@ -93,6 +139,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+                F00200000000000000000001 /* RentbutikUITests */,
+                F00100000000000000000001 /* RentbutikTests */,
 				04118187305C37F600976F26 /* Rentbutik */,
 			);
 		};
@@ -104,6 +152,8 @@
 			files = (
 			);
 		};
+		F00100000000000000000006 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		F00200000000000000000006 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -112,6 +162,8 @@
 			files = (
 			);
 		};
+		F00100000000000000000004 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		F00200000000000000000004 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -314,6 +366,42 @@
 			};
 			name = Release;
 		};
+        F00100000000000000000008 = {isa = XCBuildConfiguration; buildSettings = {
+            CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = "";
+            GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+            PRODUCT_BUNDLE_IDENTIFIER = rentbutik.RentbutikV2.RentbutikTests;
+            PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0;
+            TARGETED_DEVICE_FAMILY = 1;
+            LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@loader_path/Frameworks");
+            BUNDLE_LOADER = "$(TEST_HOST)"; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Rentbutik.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Rentbutik";
+        }; name = Debug; };
+        F00100000000000000000009 = {isa = XCBuildConfiguration; buildSettings = {
+            CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = "";
+            GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+            PRODUCT_BUNDLE_IDENTIFIER = rentbutik.RentbutikV2.RentbutikTests;
+            PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0;
+            TARGETED_DEVICE_FAMILY = 1;
+            LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@loader_path/Frameworks");
+            BUNDLE_LOADER = "$(TEST_HOST)"; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Rentbutik.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Rentbutik";
+        }; name = Release; };
+        F00200000000000000000008 = {isa = XCBuildConfiguration; buildSettings = {
+            CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = "";
+            GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+            PRODUCT_BUNDLE_IDENTIFIER = rentbutik.RentbutikV2.RentbutikUITests;
+            PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0;
+            TARGETED_DEVICE_FAMILY = 1;
+            LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@loader_path/Frameworks");
+            TEST_TARGET_NAME = Rentbutik;
+        }; name = Debug; };
+        F00200000000000000000009 = {isa = XCBuildConfiguration; buildSettings = {
+            CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = "";
+            GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+            PRODUCT_BUNDLE_IDENTIFIER = rentbutik.RentbutikV2.RentbutikUITests;
+            PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0;
+            TARGETED_DEVICE_FAMILY = 1;
+            LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@loader_path/Frameworks");
+            TEST_TARGET_NAME = Rentbutik;
+        }; name = Release; };
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -333,6 +421,8 @@
 			);
 			defaultConfigurationName = Release;
 		};
+        F00100000000000000000007 = {isa = XCConfigurationList; buildConfigurations = (F00100000000000000000008, F00100000000000000000009); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+        F00200000000000000000007 = {isa = XCConfigurationList; buildConfigurations = (F00200000000000000000008, F00200000000000000000009); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
 /* End XCConfigurationList section */
 	};
 	rootObject = 04118180305C37F600976F26 /* Project object */;

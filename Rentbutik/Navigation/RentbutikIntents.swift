@@ -4,9 +4,15 @@ import SwiftUI
 /// The single router, store and session the app and its App Intents share,
 /// so Siri, Spotlight and Shortcuts act on exactly what's on screen.
 enum AppServices {
+    #if DEBUG
+    static let store = UITestConfiguration.makeStore()
+    static let session = UITestConfiguration.makeSession()
+    static let router = UITestConfiguration.makeRouter()
+    #else
     static let router = AppRouter()
     static let store = Store.live()
     static let session = Session()
+    #endif
 }
 
 // MARK: - Intents
@@ -110,4 +116,3 @@ struct RentbutikShortcuts: AppShortcutsProvider {
                     shortTitle: "Message host", systemImageName: "message.fill")
     }
 }
-

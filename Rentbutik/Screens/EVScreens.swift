@@ -489,6 +489,7 @@ private struct EVCard: View {
                     .padding(.horizontal, 4)
                 }
                 .disabled(isUnlocking)
+                .accessibilityIdentifier("ev.start.\(vehicle.id)")
                 // Start takes its own width first; Book fills the rest.
                 .layoutPriority(1)
                 .buttonStyle(.rentbutik)

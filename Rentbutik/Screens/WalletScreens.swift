@@ -116,6 +116,7 @@ struct WalletSheet: View {
             ScrollView {
                 VStack(spacing: 18) {
                     Text(store.walletBalance, format: .currency(code: Currency.code).precision(.fractionLength(2)))
+                        .accessibilityIdentifier("wallet.balance")
                         .font(Theme.Font.largeTitle)
                         .foregroundStyle(Theme.ink)
                         .contentTransition(.numericText())
@@ -349,6 +350,7 @@ private struct PaymentMethodsScreen: View {
                             .contentShape(.rect)
                         }
                         .buttonStyle(.plain)
+                        .accessibilityIdentifier("payment.method.\(method.id)")
                     }
                 }
                 Text("Demo cards only. Real card setup requires a connected payment service.")

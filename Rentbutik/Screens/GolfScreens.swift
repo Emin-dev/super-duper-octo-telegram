@@ -271,6 +271,7 @@ private struct GolfCard: View {
                     .minimumScaleFactor(0.8)
                     .padding(.horizontal, 4)
             }
+            .accessibilityIdentifier("golf.start.\(cart.id)")
             // Start takes its own width first; Book fills the rest.
             .layoutPriority(1)
             .buttonStyle(.rentbutik)

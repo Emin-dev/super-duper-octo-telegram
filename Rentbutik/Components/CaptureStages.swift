@@ -40,6 +40,7 @@ struct CaptureStagesView: View {
         VStack(spacing: 0) {
             VStack(spacing: 2) {
                 Text(stage.title)
+                    .accessibilityIdentifier("capture.stage.\(stage.id)")
                     .font(Theme.Font.subheadlineSemibold)
                 Text(stage.detail)
                     .font(Theme.Font.footnoteRegular)

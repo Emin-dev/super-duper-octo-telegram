@@ -873,6 +873,7 @@ struct RenterCheckoutScreen: View {
                     .contentTransition(.numericText())
                     .frame(maxWidth: .infinity)
             }
+            .accessibilityIdentifier("renter.confirm")
             .buttonStyle(.rentbutik)
             .buttonBorderShape(.capsule)
             .controlSize(.large)
