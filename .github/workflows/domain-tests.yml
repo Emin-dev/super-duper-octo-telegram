@@ -18,39 +18,77 @@ jobs:
         run: swift test
   ios:
     runs-on: xcode-27
-    timeout-minutes: 30
+    timeout-minutes: 25
     strategy:
       fail-fast: false
       matrix:
-        configuration: [Debug, Release]
+        include:
+          - suite: App-state
+            configuration: Debug
+            tests: -only-testing:RentbutikTests
+          - suite: Navigation
+            configuration: Debug
+            tests: >-
+              -only-testing:RentbutikUITests/RentbutikUITests/testGuestCanBrowseAllTabsAndTripsStartEmpty
+              -only-testing:RentbutikUITests/RentbutikUITests/testGuestCanBrowseEVButStartRequiresRegistration
+              -only-testing:RentbutikUITests/RentbutikUITests/testCatalogAndHostScreensOpen
+              -only-testing:RentbutikUITests/RentbutikUITests/testChatRejectsEmptyMessageAndSendsTypedMessage
+              -only-testing:RentbutikUITests/RentbutikUITests/testLargeTextDarkModeKeepsTripsAndProfileReachable
+          - suite: Rides
+            configuration: Debug
+            tests: >-
+              -only-testing:RentbutikUITests/RentbutikUITests/testEVPhotosRideLockExtendReturnAndReceipt
+              -only-testing:RentbutikUITests/RentbutikUITests/testRideSurvivesTerminationAndRelaunch
+              -only-testing:RentbutikUITests/RentbutikUITests/testPaymentRecoverySelectsCardAndRetries
+              -only-testing:RentbutikUITests/RentbutikUITests/testGolfRentalReturnAndReceipt
+          - suite: Bookings
+            configuration: Debug
+            tests: >-
+              -only-testing:RentbutikUITests/RentbutikUITests/testRenterInstantBookingAndCancellation
+              -only-testing:RentbutikUITests/RentbutikUITests/testRenterRequestWaitsForHost
+              -only-testing:RentbutikUITests/RentbutikUITests/testTransferBookingAppearsInTrips
+          - suite: Release
+            configuration: Release
+            tests: -only-testing:RentbutikTests
+    name: Xcode · ${{ matrix.suite }}
+    env:
+      TEST_SUITE: ${{ matrix.suite }}
+      BUILD_CONFIGURATION: ${{ matrix.configuration }}
+      TEST_SELECTION: ${{ matrix.tests }}
     steps:
       - uses: actions/checkout@v4
       - name: Show installed SDKs
         run: xcodebuild -showsdks
       - name: Boot iOS 27 iPhone simulator
         run: python3 scripts/select-simulator.py
-      - name: Test app state and UI in Debug
-        if: matrix.configuration == 'Debug'
+      - name: Run Xcode simulator tests
         run: |
           set -o pipefail
-          xcodebuild -project Rentbutik.xcodeproj -scheme Rentbutik -configuration Debug \
+          read -r -a selected_tests <<< "$TEST_SELECTION"
+          xcodebuild -project Rentbutik.xcodeproj -scheme Rentbutik -configuration "$BUILD_CONFIGURATION" \
             -destination "platform=iOS Simulator,id=$TEST_SIMULATOR_ID" \
-            -parallel-testing-enabled NO -resultBundlePath TestResults-Debug.xcresult \
-            CODE_SIGNING_ALLOWED=NO test | tee xcode-Debug.log
-      - name: Test production guards in Release
-        if: matrix.configuration == 'Release'
+            -parallel-testing-enabled NO -test-timeouts-enabled YES \
+            -default-test-execution-time-allowance 180 -maximum-test-execution-time-allowance 180 \
+            -resultBundlePath "TestResults-$TEST_SUITE.xcresult" "${selected_tests[@]}" \
+            ENABLE_TESTABILITY=YES ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO test | tee "xcode-$TEST_SUITE.log"
+      - name: Export simulator screenshots
+        if: always() && matrix.suite != 'Release' && matrix.suite != 'App-state'
         run: |
-          set -o pipefail
-          xcodebuild -project Rentbutik.xcodeproj -scheme Rentbutik -configuration Release \
-            -destination "platform=iOS Simulator,id=$TEST_SIMULATOR_ID" \
-            -parallel-testing-enabled NO -only-testing:RentbutikTests \
-            -resultBundlePath TestResults-Release.xcresult \
-            ENABLE_TESTABILITY=YES CODE_SIGNING_ALLOWED=NO test | tee xcode-Release.log
-      - name: Preserve Xcode results and UI screenshots
+          if [ -d "TestResults-$TEST_SUITE.xcresult" ]; then
+            xcrun xcresulttool export attachments --path "TestResults-$TEST_SUITE.xcresult" --output-path screenshots
+          fi
+      - name: Preserve simulator screenshots
+        if: always() && matrix.suite != 'Release' && matrix.suite != 'App-state'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Screenshots-${{ matrix.suite }}
+          path: screenshots
+          retention-days: 14
+      - name: Preserve Xcode results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: Xcode-${{ matrix.configuration }}-results
+          name: Xcode-${{ matrix.suite }}-results
           path: |
             TestResults-*.xcresult
             xcode-*.log

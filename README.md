@@ -26,7 +26,7 @@ Debug builds are explicitly labeled **Demo**. Payments, authentication, QR unloc
 swift test
 ```
 
-The package tests only the Foundation domain layer, independently of SwiftUI. GitHub Actions also attempts a simulator build, which requires a runner with the app's iOS 27 SDK. See the workflow result for actual validation status.
+The package tests the Foundation domain layer independently of SwiftUI. GitHub Actions also runs app-state and UI tests in an iOS 27 simulator, plus Release-build safety checks. In Xcode, choose the `Rentbutik` scheme and **Product → Test**. See [testing instructions and coverage](TESTING.md) and the workflow result for actual validation status.
 
 ## Handoff
 

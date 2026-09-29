@@ -261,9 +261,12 @@ final class Store {
         guard activeTrip == nil, !trips.contains(where: { $0.status == .paymentPending }),
               AppConfiguration.isDemo else { return false }
         releaseHold()
+        // One clock read keeps an hour exactly 3,600 seconds. Two reads can
+        // add microseconds and make the started-hour calculator charge two.
+        let startedAt = Date.now
         trips.insert(Trip(id: UUID().uuidString, vehicleName: name, vehicleKind: kind,
-                          status: .ongoing, startDate: .now,
-                          endDate: until ?? .now.addingTimeInterval(tariff == .minute ? 0 : 3600),
+                          status: .ongoing, startDate: startedAt,
+                          endDate: until ?? startedAt.addingTimeInterval(tariff == .minute ? 0 : 3600),
                           total: 0, photoName: vehicles.first { $0.id == vehicleID }?.photoName,
                           vehicleID: vehicleID, tariff: tariff), at: 0)
         saveSnapshot()
@@ -283,9 +286,10 @@ final class Store {
             return false
         }
         releaseHold()
+        let startedAt = Date.now
         trips.insert(Trip(id: paymentID, vehicleName: cart.name, vehicleKind: .golfCart,
-                          status: .ongoing, startDate: .now,
-                          endDate: .now.addingTimeInterval(TimeInterval(hours) * 3600),
+                          status: .ongoing, startDate: startedAt,
+                          endDate: startedAt.addingTimeInterval(TimeInterval(hours) * 3600),
                           total: total, photoName: cart.photoName, vehicleID: cart.id,
                           depositPaymentID: depositID, returnPlace: "Sea Breeze Golf desk"), at: 0)
         saveSnapshot()
