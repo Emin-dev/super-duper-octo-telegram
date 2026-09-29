@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Rentbutik does not track users across apps or websites. -->
+	<key>NSPrivacyTracking</key>
+	<false/>
+	<key>NSPrivacyTrackingDomains</key>
+	<array/>
+	<!-- No data leaves the device in this build: the store is in-memory.
+	     When the backend lands, declare collected types here (location,
+	     identity documents, payment info, contact info) to match the
+	     App Store Connect privacy label. -->
+	<key>NSPrivacyCollectedDataTypes</key>
+	<array/>
+	<!-- No required-reason APIs (UserDefaults, file timestamps, disk space,
+	     system boot time) are called yet. Add entries when one is. -->
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array/>
+</dict>
+</plist>
+

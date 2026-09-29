@@ -1,4 +1,4 @@
-name: Domain tests
+name: Validate v2
 on: [push, pull_request]
 permissions:
   contents: read
@@ -7,4 +7,20 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - run: swift test
+      - name: Parse all app Swift source
+        run: |
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          import subprocess
+          subprocess.run(["xcrun", "swiftc", "-frontend", "-parse", *map(str, Path("Rentbutik").rglob("*.swift"))], check=True)
+          PYCODE
+      - name: Test fares, payment retries and refunds
+        run: swift test
+  ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show installed SDKs
+        run: xcodebuild -showsdks
+      - name: Build iOS simulator app
+        run: xcodebuild -project Rentbutik.xcodeproj -scheme Rentbutik -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
