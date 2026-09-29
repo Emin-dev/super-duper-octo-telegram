@@ -27,3 +27,9 @@ Manual device checks still required: Dynamic Type, VoiceOver, Reduce Transparenc
 ## Asset transfer limitation
 
 The connector returned empty content for three source images larger than 1 MB: `evSuv.png`, `golfCartVentura.png` and `mercedesAMGGT.png`. They are excluded instead of shipping corrupt files; `PhotoFill` displays the existing SF Symbol fallback. Restore those images into their original asset sets from the pinned source commit to restore the photography. No different car photograph is substituted.
+
+## Validation results at app import
+
+- Commit `8270d5f`: all 46 Swift files parse; seven domain tests pass in [run 36626914735](https://github.com/Emin-dev/super-duper-octo-telegram/actions/runs/36626914735).
+- The initial simulator build was blocked before compilation: the default macOS runner selected Xcode 26.6, which cannot read project format 110. The iOS job now uses the official `xcode-27` preview runner label, retaining the app’s iOS 27 target.
+- Eight Figma screens were visually reviewed. Six primary prototype actions connect the key states. The Figma screens are editable specifications rather than simulator screenshots.
