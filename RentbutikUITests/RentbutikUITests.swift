@@ -19,7 +19,7 @@ final class RentbutikUITests: XCTestCase {
             screenshot.name = name
             screenshot.lifetime = .keepAlways
             add(screenshot)
-            if testRun?.hasSucceeded == false {
+            if (testRun?.failureCount ?? 0) > 0 {
                 print("UI FAILURE TREE: \(app.debugDescription)")
             }
             app.terminate()
@@ -136,7 +136,7 @@ final class RentbutikUITests: XCTestCase {
         tap(app.tabBars.buttons["Trips"])
         tap(app.buttons["Return cart"])
         capture(["front", "rear", "left", "right", "inside", "parking"])
-        XCTAssertTrue(app.navigationBars["Receipt"].waitForExistence(timeout: 15))
+        XCTAssertTrue(app.navigationBars["Trip details"].waitForExistence(timeout: 15))
         XCTAssertTrue(app.staticTexts["Completed"].exists)
         tap(app.buttons["Done"])
         XCTAssertTrue(app.staticTexts["No active trip"].exists)
@@ -187,11 +187,11 @@ final class RentbutikUITests: XCTestCase {
 
     func testChatRejectsEmptyMessageAndSendsTypedMessage() {
         launch("chat", verified: true)
-        XCTAssertFalse(app.buttons["Send"].isEnabled)
+        XCTAssertFalse(app.buttons["chat.send"].isEnabled)
         let message = app.textViews["Message"].exists ? app.textViews["Message"] : app.textFields["Message"]
         tap(message)
         message.typeText("UI test: please confirm the return location.")
-        tap(app.buttons["Send"])
+        tap(app.buttons["chat.send"])
         XCTAssertTrue(app.staticTexts["UI test: please confirm the return location."].waitForExistence(timeout: 5))
     }
 

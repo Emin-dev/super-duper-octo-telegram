@@ -480,6 +480,7 @@ private struct MessageComposer: View {
                 .disabled(!canSend)
                 .opacity(canSend ? 1 : 0.4)
                 .accessibilityLabel("Send")
+                .accessibilityIdentifier("chat.send")
             }
             .padding(.leading, 16)
             .padding(.trailing, 6)
@@ -504,4 +505,3 @@ private struct MessageComposer: View {
         ThreadScreen(thread: store.threads[1], store: store)
     }
 }
-
